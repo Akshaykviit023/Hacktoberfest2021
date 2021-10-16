@@ -1,0 +1,101 @@
+#include <iostream>
+using namespace std;
+ 
+class BinaryTree
+{
+    int data;
+    BinaryTree *left, *right;
+ 
+public:
+
+    BinaryTree();
+
+    BinaryTree(int);
+
+    BinaryTree* Insert(BinaryTree*, int);
+
+    void Inorder(BinaryTree*);
+    void Postorder(BinaryTree*);
+};
+
+BinaryTree ::BinaryTree(): data(0), left(NULL), right(NULL)
+{
+}
+
+BinaryTree ::BinaryTree(int value)
+{
+    data = value;
+    left = right = NULL;
+}
+
+BinaryTree* BinaryTree ::Insert(BinaryTree* root, int value)
+{
+    if (!root)
+    return new BinaryTree(value);
+
+    if (value > root->data)
+    {
+        root->right = Insert(root->right, value);
+    }
+    else
+        root->left = Insert(root->left, value);
+
+    return root;
+}
+
+void BinaryTree ::Inorder(BinaryTree* root)
+{
+    if (!root) {
+        return;
+    }
+    Inorder(root->left);
+    cout << root->data <<" ";
+    Inorder(root->right);
+}
+void BinaryTree ::Postorder(BinaryTree* root)
+{
+    if (!root) {
+        return;
+    }
+    Postorder(root->left);
+    Postorder(root->right);
+    cout << root->data <<" ";
+    
+}
+
+int main()
+{
+    BinaryTree b, *root = NULL;
+    int ch,num;
+    cout<<"Enter number: ";
+    cin>>num;
+    root = b.Insert(root,num);
+   cout<<"1) Continue Inserting"<<endl;
+   cout<<"2) Display Inorder"<<endl;
+   cout<<"3) Display Postorder"<<endl;
+   cout<<"4) Exit"<<endl;
+   do {
+      cout<<"\nEnter your choice : ";
+      cin>>ch;
+      switch (ch) {
+         case 1: 
+         cout<<"enter number: ";
+         cin>>num;
+         b.Insert(root,num);
+         break; 
+         case 2: 
+         cout<<"\nInorder:\n";
+         b.Inorder(root);
+         break;
+         case 3: 
+         cout<<"\nPostorder:\n";
+         b.Postorder(root); 
+         break;
+         case 4: cout<<"Exit"<<endl;
+         break;
+         default: cout<<"Invalid choice"<<endl;
+      }
+   } while(ch!=4);
+
+    return 0;
+}
